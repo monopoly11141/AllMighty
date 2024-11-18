@@ -1,7 +1,7 @@
-package com.example.allmighty.calculator.presentation.round_list.component
+package com.example.allmighty.calculator.presentation.record.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,24 +16,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.example.allmighty.calculator.presentation.model.RoundUi
+import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
 import com.example.allmighty.core.presentation.util.getContentColor
-import com.example.allmighty.ui.theme.AppTheme
+import com.example.allmighty.ui.theme.AllMightyTheme
+import com.example.allmighty.ui.theme.backgroundDark
+import com.example.allmighty.ui.theme.backgroundLight
+import com.example.allmighty.ui.theme.onPrimaryContainerDark
 
 @Composable
 fun RoundSummary(
-    roundUi: RoundUi,
-    onClick: () -> Unit,
+    playerUiList: List<PlayerUi>,
     modifier: Modifier = Modifier
 ) {
 
-    val minScore = roundUi.players.withIndex().minByOrNull { player -> player.value.score }?.value?.score
-    val maxScore = roundUi.players.withIndex().maxByOrNull { player -> player.value.score }?.value?.score
+    val minScore = playerUiList.withIndex().minByOrNull { player -> player.value.score }?.value?.score
+    val maxScore = playerUiList.withIndex().maxByOrNull { player -> player.value.score }?.value?.score
 
     Row(
         modifier = modifier
-            .clickable(onClick = onClick)
             .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -43,15 +44,15 @@ fun RoundSummary(
                 .weight(1f)
         ) {
 
-            roundUi.players.forEach { player ->
+            playerUiList.forEach { player ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(40.dp)
                 ) {
                     val fontColor = when (player.score) {
-                        maxScore -> Color.Blue
-                        minScore -> Color.Red
+                        maxScore -> MaterialTheme.colorScheme.primary
+                        minScore -> MaterialTheme.colorScheme.error
                         else -> getContentColor()
                     }
 
@@ -74,10 +75,15 @@ fun RoundSummary(
 @PreviewLightDark
 @Composable
 private fun RoundSummaryPreview() {
-    AppTheme {
+    AllMightyTheme {
         RoundSummary(
-            roundUi = previewRoundUi,
-            onClick = {},
+            playerUiList = listOf(
+                PlayerUi("player 1", 2),
+                PlayerUi("player 2", 100),
+                PlayerUi("player 3", -24),
+                PlayerUi("player 4", -24),
+                PlayerUi("player 5", 100),
+            ),
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
         )

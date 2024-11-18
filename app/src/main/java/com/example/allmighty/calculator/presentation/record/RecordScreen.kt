@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.round_list
+package com.example.allmighty.calculator.presentation.record
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,30 +18,39 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.allmighty.calculator.presentation.round_list.component.RoundItem
-import com.example.allmighty.calculator.presentation.round_list.component.RoundSummary
-import com.example.allmighty.calculator.presentation.round_list.component.previewRoundUi
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.allmighty.calculator.presentation.model.PlayerUi
+import com.example.allmighty.calculator.presentation.model.RecordUi
+import com.example.allmighty.calculator.presentation.record.component.RoundItem
+import com.example.allmighty.calculator.presentation.record.component.RoundSummary
+import com.example.allmighty.calculator.presentation.record.component.previewRoundUi
 import com.example.allmighty.core.presentation.util.getContentColor
-import com.example.allmighty.ui.theme.AppTheme
+import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
-fun RoundListScreenRoot(
-    viewModel: RoundListViewModel = hiltViewModel()
+fun RecordScreenRoot(
+    navController: NavController,
+    viewModel: RecordViewModel = hiltViewModel()
 ) {
-    RoundListScreen(viewModel.state)
+    RecordScreen(
+        navController = navController,
+        state = viewModel.state
+    )
 }
 
 @Composable
-fun RoundListScreen(
-    state: RoundListState,
+fun RecordScreen(
+    navController: NavController,
+    state: RecordState,
     modifier: Modifier = Modifier
 ) {
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
-
         Text(
             text = "Record",
             modifier = modifier
@@ -49,7 +58,7 @@ fun RoundListScreen(
             fontSize = 24.sp,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center,
-            color = getContentColor()
+            color = MaterialTheme.colorScheme.primary
         )
 
         HorizontalDivider(
@@ -57,8 +66,7 @@ fun RoundListScreen(
         )
 
         RoundSummary(
-            roundUi = state.roundList.last(),
-            onClick = {},
+            playerUiList = state.recordUi.playerUiList,
             modifier = modifier
                 .fillMaxWidth()
         )
@@ -72,13 +80,13 @@ fun RoundListScreen(
                 .weight(1f),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            itemsIndexed(state.roundList) { index, roundUi ->
+            itemsIndexed(state.recordUi.roundUiList) { index, roundUi ->
 
                 Text(
                     text = "${index + 1} 라운드",
                     modifier = modifier
                         .fillMaxWidth(),
-                    color = getContentColor(),
+                    color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -102,13 +110,22 @@ fun RoundListScreen(
 
 @PreviewLightDark
 @Composable
-private fun RoundListScreenPreview() {
-    AppTheme {
-        RoundListScreen(
-            state = RoundListState(
-                roundList = (1..100).map {
-                    previewRoundUi
-                }
+private fun RecordScreenPreview() {
+    AllMightyTheme {
+        RecordScreen(
+            rememberNavController(),
+            state = RecordState(
+                recordUi = RecordUi(
+                    playerUiList = (1..5).map { it ->
+                        PlayerUi(
+                            name = "Player $it",
+                            score = 0
+                        )
+                    },
+                    roundUiList = (1..100).map {
+                        previewRoundUi
+                    }
+                )
             ),
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)

@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.round_list
+package com.example.allmighty.calculator.presentation.record
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class RoundListViewModel @Inject constructor(
+class RecordViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(RoundListState())
+    private val _state = MutableStateFlow(RecordState())
     val state = _state.value
 
-    fun onAction(action: RoundListAction) {
+    fun onAction(action: RecordAction) {
         when (action) {
-            is RoundListAction.onRoundClick -> {
+            is RecordAction.onRoundClick -> {
 
             }
 

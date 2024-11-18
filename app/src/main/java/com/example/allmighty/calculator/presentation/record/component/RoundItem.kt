@@ -1,8 +1,7 @@
-package com.example.allmighty.calculator.presentation.round_list.component
+package com.example.allmighty.calculator.presentation.record.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,11 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.example.allmighty.calculator.presentation.model.Player
 import com.example.allmighty.calculator.presentation.model.RoundUi
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
 import com.example.allmighty.core.presentation.util.getContentColor
-import com.example.allmighty.ui.theme.AppTheme
+import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
 fun RoundItem(
@@ -50,19 +48,19 @@ fun RoundItem(
                 Text(
                     text = "공약 : ${roundUi.pledgeNumber}",
                     fontWeight = FontWeight.Bold,
-                    color = getContentColor()
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Text(
                     text = "실제 : ${roundUi.actualNumber}",
                     fontWeight = FontWeight.Bold,
-                    color = getContentColor()
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Text(
                     text = "기루 : ${roundUi.trumpSuit}",
                     fontWeight = FontWeight.Bold,
-                    color = getContentColor()
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -70,33 +68,40 @@ fun RoundItem(
                 color = getContentColor()
             )
 
-            roundUi.players.forEachIndexed { index, player ->
+            roundUi.playerNameList.forEachIndexed { index, playerName ->
+
+                val fontColor = when (index) {
+                    roundUi.mightyPlayerIndex -> MaterialTheme.colorScheme.primary
+                    roundUi.friendPlayerIndex -> MaterialTheme.colorScheme.primary
+                    else -> getContentColor()
+                }
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(40.dp)
                 ) {
                     Text(
-                        text = player.name,
+                        text = playerName,
                         fontWeight = FontWeight.Bold,
-                        color = getContentColor()
+                        color = fontColor
                     )
 
                     Text(
                         text = roundUi.scoreChange[index].formatted,
-                        color = getContentColor()
+                        color = fontColor
                     )
 
                     if (index == roundUi.mightyPlayerIndex) {
                         Text(
                             text = "마이티",
-                            color = getContentColor()
+                            color = fontColor
                         )
                     }
                     if (index == roundUi.friendPlayerIndex) {
                         Text(
                             text = "친구",
-                            color = getContentColor()
+                            color = fontColor
                         )
                     }
 
@@ -111,7 +116,7 @@ fun RoundItem(
 @PreviewLightDark
 @Composable
 private fun RoundItemPreview() {
-    AppTheme {
+    AllMightyTheme {
         RoundItem(
             roundUi = previewRoundUi,
             onClick = {},
@@ -122,12 +127,12 @@ private fun RoundItemPreview() {
 }
 
 internal val previewRoundUi = RoundUi(
-    players = listOf(
-        Player("Player 1", 2),
-        Player("Player 2", 100),
-        Player("Player 3", -24),
-        Player("Player 4", -24),
-        Player("Player 5", 100)
+    playerNameList = listOf(
+        "Player 1",
+        "Player 2",
+        "Player 3",
+        "Player 4",
+        "Player 5"
     ),
     mightyPlayerIndex = 1,
     friendPlayerIndex = 3,

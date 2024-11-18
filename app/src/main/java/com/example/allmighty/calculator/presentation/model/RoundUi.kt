@@ -1,21 +1,13 @@
 package com.example.allmighty.calculator.presentation.model
 
-import java.text.NumberFormat
-import java.util.Locale
-
 data class RoundUi(
-    val players: List<Player>,
-    val mightyPlayerIndex: Int,
-    val friendPlayerIndex: Int,
-    val trumpSuit: String,
-    val pledgeNumber: Int,
-    val actualNumber: Int,
-    val scoreChange: List<DisplayableNumber>,
-)
-
-data class Player(
-    val name: String,
-    val score: Int
+    val playerNameList: List<String> = emptyList(),
+    val mightyPlayerIndex: Int = -1,
+    val friendPlayerIndex: Int = -1,
+    val trumpSuit: String = "",
+    val pledgeNumber: Int = -1,
+    val actualNumber: Int = -1,
+    val scoreChange: List<DisplayableNumber> = emptyList(),
 )
 
 data class DisplayableNumber(

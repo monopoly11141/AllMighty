@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.allmighty.calculator.presentation.record.RecordScreenRoot
 
 @Composable
 fun Navigation(
@@ -12,10 +13,10 @@ fun Navigation(
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.DisplayScreen.route
+        startDestination = Screen.RecordScreen.route
     ) {
-        composable(route = Screen.DisplayScreen.route) {
-            //RecordScreen(navController = navController)
+        composable(route = Screen.RecordScreen.route) {
+            RecordScreenRoot(navController = navHostController)
         }
     }
 }

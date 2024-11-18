@@ -2,5 +2,5 @@ package com.example.allmighty.navigation
 
 sealed class Screen(val route: String) {
 
-    data object DisplayScreen : Screen(route = "display_screen")
+    data object RecordScreen : Screen(route = "record_screen")
 }
