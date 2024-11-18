@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.allmighty.calculator.presentation.round_list.component.RoundItem
+import com.example.allmighty.calculator.presentation.round_list.component.RoundSummary
 import com.example.allmighty.calculator.presentation.round_list.component.previewRoundUi
+import com.example.allmighty.core.presentation.util.getContentColor
 import com.example.allmighty.ui.theme.AppTheme
 
 @Composable
@@ -34,34 +36,64 @@ fun RoundListScreen(
     state: RoundListState,
     modifier: Modifier = Modifier
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
+
         Text(
             text = "Record",
             modifier = modifier
                 .fillMaxWidth(),
             fontSize = 24.sp,
             fontWeight = FontWeight.ExtraBold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = getContentColor()
         )
 
-        HorizontalDivider()
+        HorizontalDivider(
+            color = getContentColor()
+        )
+
+        RoundSummary(
+            roundUi = state.roundList.last(),
+            onClick = {},
+            modifier = modifier
+                .fillMaxWidth()
+        )
+
+        HorizontalDivider(
+            color = getContentColor()
+        )
 
         LazyColumn(
             modifier = modifier
                 .weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(state.roundList) { roundUi ->
+            itemsIndexed(state.roundList) { index, roundUi ->
+
+                Text(
+                    text = "${index + 1} 라운드",
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    color = getContentColor(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.ExtraBold
+                )
+
                 RoundItem(
                     roundUi = roundUi,
                     onClick = { /*TODO*/ },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-                HorizontalDivider()
+
+                HorizontalDivider(
+                    color = getContentColor()
+                )
+
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.allmighty.calculator.presentation.model.Player
 import com.example.allmighty.calculator.presentation.model.RoundUi
+import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
+import com.example.allmighty.core.presentation.util.getContentColor
 import com.example.allmighty.ui.theme.AppTheme
 
 @Composable
@@ -27,12 +30,10 @@ fun RoundItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val contentColor = if (isSystemInDarkTheme()) Color.White else Color.Black
-
     Row(
         modifier = modifier
             .clickable(onClick = onClick)
-            .padding(16.dp),
+            .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -40,6 +41,35 @@ fun RoundItem(
             modifier = Modifier
                 .weight(1f)
         ) {
+            Row(
+                modifier = modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Text(
+                    text = "공약 : ${roundUi.pledgeNumber}",
+                    fontWeight = FontWeight.Bold,
+                    color = getContentColor()
+                )
+
+                Text(
+                    text = "실제 : ${roundUi.actualNumber}",
+                    fontWeight = FontWeight.Bold,
+                    color = getContentColor()
+                )
+
+                Text(
+                    text = "기루 : ${roundUi.trumpSuit}",
+                    fontWeight = FontWeight.Bold,
+                    color = getContentColor()
+                )
+            }
+
+            HorizontalDivider(
+                color = getContentColor()
+            )
+
             roundUi.players.forEachIndexed { index, player ->
                 Row(
                     modifier = Modifier
@@ -49,24 +79,27 @@ fun RoundItem(
                     Text(
                         text = player.name,
                         fontWeight = FontWeight.Bold,
-                        color = contentColor
+                        color = getContentColor()
                     )
+
                     Text(
-                        text = player.score.toString(),
-                        color = contentColor
+                        text = roundUi.scoreChange[index].formatted,
+                        color = getContentColor()
                     )
-                    if(index == roundUi.mightyPlayerIndex) {
+
+                    if (index == roundUi.mightyPlayerIndex) {
                         Text(
                             text = "마이티",
-                            color = contentColor
+                            color = getContentColor()
                         )
                     }
-                    if(index == roundUi.friendPlayerIndex) {
+                    if (index == roundUi.friendPlayerIndex) {
                         Text(
-                            text ="친구",
-                            color = contentColor
+                            text = "친구",
+                            color = getContentColor()
                         )
                     }
+
                 }
 
             }
@@ -90,15 +123,16 @@ private fun RoundItemPreview() {
 
 internal val previewRoundUi = RoundUi(
     players = listOf(
-        Player("Player 1", 0),
-        Player("Player 2", 0),
-        Player("Player 3", 0),
-        Player("Player 4", 0),
-        Player("Player 5", 0)
+        Player("Player 1", 2),
+        Player("Player 2", 100),
+        Player("Player 3", -24),
+        Player("Player 4", -24),
+        Player("Player 5", 100)
     ),
     mightyPlayerIndex = 1,
     friendPlayerIndex = 3,
     trumpSuit = "Spades",
     pledgeNumber = 14,
-    actualNumber = 16
+    actualNumber = 16,
+    scoreChange = listOf(-4, 4, -4, 2, -4).map { it -> it.toDisplayableNumber() }
 )
