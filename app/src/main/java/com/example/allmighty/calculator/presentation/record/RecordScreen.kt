@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.allmighty.calculator.presentation.model.PlayerUi
@@ -38,7 +39,7 @@ fun RecordScreenRoot(
 ) {
     RecordScreen(
         navController = navController,
-        state = viewModel.state
+        state = viewModel.state.collectAsStateWithLifecycle().value
     )
 }
 
@@ -53,7 +54,7 @@ fun RecordScreen(
         floatingActionButton = {
             AddRoundButton(
                 onClick = {
-                    viewModel.onAction(RecordAction.onAddRoundClick)
+                    viewModel.onAction(RecordAction.OnAddRoundClick)
                 }
             )
         }
@@ -93,7 +94,9 @@ fun RecordScreen(
                     .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
-                itemsIndexed(state.recordUi.roundUiList) { index, roundUi ->
+                itemsIndexed(
+                    items = state.recordUi.roundUiList
+                ) { index, roundUi ->
 
                     Text(
                         text = "${index + 1} 라운드",
