@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
+import com.example.allmighty.calculator.presentation.record.component.AddRoundButton
 import com.example.allmighty.calculator.presentation.record.component.RoundItem
 import com.example.allmighty.calculator.presentation.record.component.RoundSummary
 import com.example.allmighty.calculator.presentation.record.component.previewRoundUi
@@ -41,70 +44,83 @@ fun RecordScreenRoot(
 
 @Composable
 fun RecordScreen(
+    modifier: Modifier = Modifier,
     navController: NavController,
-    state: RecordState,
-    modifier: Modifier = Modifier
+    viewModel: RecordViewModel = hiltViewModel(),
+    state: RecordState
 ) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primaryContainer)
-    ) {
-        Text(
-            text = "Record",
-            modifier = modifier
-                .fillMaxWidth(),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.ExtraBold,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        HorizontalDivider(
-            color = getContentColor()
-        )
-
-        RoundSummary(
-            playerUiList = state.recordUi.playerUiList,
-            modifier = modifier
-                .fillMaxWidth()
-        )
-
-        HorizontalDivider(
-            color = getContentColor()
-        )
-
-        LazyColumn(
-            modifier = modifier
-                .weight(1f),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
+    Scaffold(
+        floatingActionButton = {
+            AddRoundButton(
+                onClick = {
+                    viewModel.onAction(RecordAction.onAddRoundClick)
+                }
+            )
+        }
+    ) { contentPaddings ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .padding(contentPaddings)
         ) {
-            itemsIndexed(state.recordUi.roundUiList) { index, roundUi ->
+            Text(
+                text = "Record",
+                modifier = modifier
+                    .fillMaxWidth(),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary
+            )
 
-                Text(
-                    text = "${index + 1} 라운드",
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.ExtraBold
-                )
+            HorizontalDivider(
+                color = getContentColor()
+            )
 
-                RoundItem(
-                    roundUi = roundUi,
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
+            RoundSummary(
+                playerUiList = state.recordUi.playerUiList,
+                modifier = modifier
+                    .fillMaxWidth()
+            )
 
-                HorizontalDivider(
-                    color = getContentColor()
-                )
+            HorizontalDivider(
+                color = getContentColor()
+            )
 
+            LazyColumn(
+                modifier = modifier
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                itemsIndexed(state.recordUi.roundUiList) { index, roundUi ->
+
+                    Text(
+                        text = "${index + 1} 라운드",
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.primary,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+
+                    RoundItem(
+                        roundUi = roundUi,
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+
+                    HorizontalDivider(
+                        color = getContentColor()
+                    )
+
+                }
             }
+
         }
     }
+
 
 }
 
@@ -113,6 +129,8 @@ fun RecordScreen(
 private fun RecordScreenPreview() {
     AllMightyTheme {
         RecordScreen(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background),
             rememberNavController(),
             state = RecordState(
                 recordUi = RecordUi(
@@ -126,9 +144,7 @@ private fun RecordScreenPreview() {
                         previewRoundUi
                     }
                 )
-            ),
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
+            )
         )
     }
 }
