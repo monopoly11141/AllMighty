@@ -1,5 +1,6 @@
 package com.example.allmighty.calculator.presentation.record
 
+import android.view.Display
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.allmighty.calculator.presentation.model.DisplayableTime
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
 import com.example.allmighty.calculator.presentation.record.component.AddRoundButton
@@ -66,7 +68,7 @@ fun RecordScreen(
                 .padding(contentPaddings)
         ) {
             Text(
-                text = "Record",
+                text = state.recordUi.title,
                 modifier = modifier
                     .fillMaxWidth(),
                 fontSize = 24.sp,
@@ -136,18 +138,22 @@ private fun RecordScreenPreview() {
                 .background(MaterialTheme.colorScheme.background),
             rememberNavController(),
             state = RecordState(
-                recordUi = RecordUi(
-                    playerUiList = (1..5).map { it ->
-                        PlayerUi(
-                            name = "Player $it",
-                            score = 0
-                        )
-                    },
-                    roundUiList = (1..100).map {
-                        previewRoundUi
-                    }
-                )
+                recordUi = previewRecordUi
             )
         )
     }
 }
+
+internal val previewRecordUi = RecordUi(
+    playerUiList = (1..5).map { it ->
+        PlayerUi(
+            name = "Player $it",
+            score = 0
+        )
+    },
+    roundUiList = (1..100).map {
+        previewRoundUi
+    },
+    title = "마이티",
+    createdTime = DisplayableTime()
+)

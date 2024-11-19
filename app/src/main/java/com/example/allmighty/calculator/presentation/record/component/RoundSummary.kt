@@ -35,7 +35,8 @@ fun RoundSummary(
 
     Row(
         modifier = modifier
-            .padding(4.dp),
+            .padding(4.dp)
+            .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -85,7 +86,7 @@ private fun RoundSummaryPreview() {
                 PlayerUi("player 5", 100),
             ),
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
+
         )
     }
 }

@@ -31,7 +31,8 @@ fun RoundItem(
     Row(
         modifier = modifier
             .clickable(onClick = onClick)
-            .padding(4.dp),
+            .padding(4.dp)
+            .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -121,7 +122,7 @@ private fun RoundItemPreview() {
             roundUi = previewRoundUi,
             onClick = {},
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
+
         )
     }
 }
