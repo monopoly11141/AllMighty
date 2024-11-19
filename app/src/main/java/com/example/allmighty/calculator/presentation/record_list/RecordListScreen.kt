@@ -49,7 +49,7 @@ fun RecordListScreen(
         floatingActionButton = {
             AddRoundButton(
                 onClick = {
-                    //
+                    viewModel.onAction(RecordListAction.OnCreateRecord)
                 }
             )
         }

@@ -14,7 +14,7 @@ fun Navigation(
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.RecordScreen.route
+        startDestination = Screen.RecordListScreen.route
     ) {
         composable(route = Screen.RecordScreen.route) {
             RecordScreenRoot(navController = navHostController)
