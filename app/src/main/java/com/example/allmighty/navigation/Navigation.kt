@@ -2,8 +2,10 @@ package com.example.allmighty.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.allmighty.calculator.presentation.record.RecordScreenRoot
 import com.example.allmighty.calculator.presentation.record_list.RecordListScreenRoot
 
@@ -16,8 +18,18 @@ fun Navigation(
         navController = navHostController,
         startDestination = Screen.RecordListScreen.route
     ) {
-        composable(route = Screen.RecordScreen.route) {
-            RecordScreenRoot(navController = navHostController)
+        composable(route = "${Screen.RecordScreen.route}/{recordUiId}",
+            arguments = listOf(
+                navArgument("recordUiId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
+            val recordUiId = entry.arguments?.getString("recordUiId")!!
+            RecordScreenRoot(
+                navController = navHostController,
+                recordUiId = recordUiId,
+            )
         }
 
         composable(route = Screen.RecordListScreen.route) {

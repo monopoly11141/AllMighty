@@ -11,20 +11,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.allmighty.calculator.presentation.record.RecordAction
-import com.example.allmighty.calculator.presentation.record.RecordScreen
-import com.example.allmighty.calculator.presentation.record.RecordState
-import com.example.allmighty.calculator.presentation.record.RecordViewModel
 import com.example.allmighty.calculator.presentation.record.component.AddRoundButton
 import com.example.allmighty.calculator.presentation.record.previewRecordUi
 import com.example.allmighty.calculator.presentation.record_list.component.RecordItem
+import com.example.allmighty.navigation.Screen
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
@@ -60,18 +56,20 @@ fun RecordListScreen(
                 .background(MaterialTheme.colorScheme.primaryContainer)
                 .padding(contentPaddings)
         ) {
-                LazyColumn(
-                    modifier = modifier
-                        .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    items(state.recordUiList) { recordUi ->
-                        RecordItem(
-                            recordUi = recordUi,
-                            onClick =  {}
-                        )
-                    }
+            LazyColumn(
+                modifier = modifier
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                items(state.recordUiList) { recordUi ->
+                    RecordItem(
+                        recordUi = recordUi,
+                        onClick = {
+                            navController.navigate("${Screen.RecordScreen.route}/${recordUi.id}")
+                        }
+                    )
                 }
+            }
         }
     }
 }

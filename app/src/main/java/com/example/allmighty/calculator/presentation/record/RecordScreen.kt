@@ -37,11 +37,13 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 @Composable
 fun RecordScreenRoot(
     navController: NavController,
-    viewModel: RecordViewModel = hiltViewModel()
+    viewModel: RecordViewModel = hiltViewModel(),
+    recordUiId: String
 ) {
     RecordScreen(
         navController = navController,
-        state = viewModel.state.collectAsStateWithLifecycle().value
+        state = viewModel.state.collectAsStateWithLifecycle().value,
+        recordUiId = recordUiId
     )
 }
 
@@ -50,7 +52,8 @@ fun RecordScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: RecordViewModel = hiltViewModel(),
-    state: RecordState
+    state: RecordState,
+    recordUiId: String = ""
 ) {
     Scaffold(
         floatingActionButton = {
