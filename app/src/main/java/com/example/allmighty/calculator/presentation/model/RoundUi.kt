@@ -1,5 +1,8 @@
 package com.example.allmighty.calculator.presentation.model
 
+import com.example.allmighty.calculator.domain.model.Round
+import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
+
 data class RoundUi(
     val playerNameList: List<String> = emptyList(),
     val mightyPlayerIndex: Int = -1,
@@ -22,3 +25,4 @@ fun Int.toDisplayableNumber(): DisplayableNumber {
         formatted = formattedString
     )
 }
+
