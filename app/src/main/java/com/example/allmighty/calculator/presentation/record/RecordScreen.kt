@@ -40,12 +40,10 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 fun RecordScreenRoot(
     navController: NavController,
     viewModel: RecordViewModel = hiltViewModel(),
-    recordUiId: String
 ) {
     RecordScreen(
         navController = navController,
         state = viewModel.state.collectAsStateWithLifecycle().value,
-        recordUiId = recordUiId,
         onAction = { action ->
             viewModel.onAction(action)
         }
@@ -58,7 +56,6 @@ fun RecordScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     state: RecordState,
-    recordUiId: String = "",
     onAction: (RecordAction) -> Unit
 ) {
     Scaffold(

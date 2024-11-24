@@ -25,11 +25,9 @@ fun Navigation(
                     type = NavType.StringType
                 }
             )
-        ) { entry ->
-            val recordUiId = entry.arguments?.getString("recordUiId")!!
+        ) {
             RecordScreenRoot(
-                navController = navHostController,
-                recordUiId = recordUiId,
+                navController = navHostController
             )
         }
 
