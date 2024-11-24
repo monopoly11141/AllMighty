@@ -6,16 +6,20 @@ import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
 import com.example.allmighty.calculator.presentation.model.RoundUi
 import com.example.allmighty.calculator.presentation.model.toDisplayableTime
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @Entity(tableName = "record_database")
 data class Record(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val title: String,
-    val createdTime: Long,
-    val playerList: List<String>,
-    val playerScoreList: List<Int>,
-    val roundList: List<Round>
+    val id: Int = 0,
+    val title: String = "",
+    val createdTime: Long = LocalDateTime.now()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()?.toEpochMilli() ?: 0,
+    val playerList: List<String> = emptyList(),
+    val playerScoreList: List<Int> = emptyList(),
+    val roundList: List<Round> = emptyList()
 )
 
 fun Record.toRecordUi(): RecordUi {
