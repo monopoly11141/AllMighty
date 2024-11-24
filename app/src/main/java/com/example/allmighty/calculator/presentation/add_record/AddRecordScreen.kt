@@ -20,7 +20,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.allmighty.calculator.presentation.add_record.component.AddRecordButton
 import com.example.allmighty.calculator.presentation.add_record.component.PlayerNameTextField
 import com.example.allmighty.calculator.presentation.add_record.component.RecordTitleTextField
-import com.example.allmighty.calculator.presentation.util.PlayerUtil.PLAYER_COUNT
 import com.example.allmighty.navigation.Screen
 import com.example.allmighty.ui.theme.AllMightyTheme
 
@@ -65,7 +64,7 @@ fun AddRecordScreen(
             titleText = state.recordTitle,
             labelText = "기록 제목을 입력하세요."
         ) { recordTitle ->
-            onAction(AddRecordAction.onRecordTitleChange(recordTitle))
+            onAction(AddRecordAction.OnRecordTitleChange(recordTitle))
         }
 
         Spacer(
@@ -83,7 +82,7 @@ fun AddRecordScreen(
                     nameText = state.playerNameList[i],
                     labelText = "플레이어 ${i + 1}의 이름을 입력하세요. "
                 ) { name ->
-                    onAction(AddRecordAction.onPlayerNameChange(i, name))
+                    onAction(AddRecordAction.OnPlayerNameChange(i, name))
                 }
 
             }
@@ -99,7 +98,7 @@ fun AddRecordScreen(
                 .background(MaterialTheme.colorScheme.background),
             text = "기록 추가"
         ) {
-            onAction(AddRecordAction.onAddRecordAction)
+            onAction(AddRecordAction.OnAddRecord)
             navController.navigate(Screen.RecordListScreen.route)
         }
 

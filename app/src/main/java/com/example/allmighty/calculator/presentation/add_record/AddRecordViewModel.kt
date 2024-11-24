@@ -31,15 +31,15 @@ class AddRecordViewModel @Inject constructor(
 
     fun onAction(action: AddRecordAction) {
         when (action) {
-            is AddRecordAction.onRecordTitleChange -> {
+            is AddRecordAction.OnRecordTitleChange -> {
                 onRecordTitleChange(action.recordTitle)
             }
 
-            is AddRecordAction.onPlayerNameChange -> {
+            is AddRecordAction.OnPlayerNameChange -> {
                 onPlayerNameChange(action.index, action.playerName)
             }
 
-            is AddRecordAction.onAddRecordAction -> {
+            is AddRecordAction.OnAddRecord -> {
                 onAddRecordAction()
             }
         }
