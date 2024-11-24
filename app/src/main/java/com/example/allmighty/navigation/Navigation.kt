@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.allmighty.calculator.presentation.add_record.AddRecordScreenRoot
 import com.example.allmighty.calculator.presentation.record.RecordScreenRoot
 import com.example.allmighty.calculator.presentation.record_list.RecordListScreenRoot
 
@@ -34,6 +35,10 @@ fun Navigation(
 
         composable(route = Screen.RecordListScreen.route) {
             RecordListScreenRoot(navController = navHostController)
+        }
+
+        composable(route = Screen.AddRecordScreen.route) {
+            AddRecordScreenRoot(navController = navHostController)
         }
     }
 }

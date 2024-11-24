@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.allmighty.calculator.presentation.add_record.AddRecordAction
 import com.example.allmighty.calculator.presentation.model.DisplayableTime
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
@@ -32,6 +33,7 @@ import com.example.allmighty.calculator.presentation.record.component.RoundItem
 import com.example.allmighty.calculator.presentation.record.component.RoundSummary
 import com.example.allmighty.calculator.presentation.record.component.previewRoundUi
 import com.example.allmighty.core.presentation.util.getContentColor
+import com.example.allmighty.navigation.Screen
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
@@ -43,23 +45,27 @@ fun RecordScreenRoot(
     RecordScreen(
         navController = navController,
         state = viewModel.state.collectAsStateWithLifecycle().value,
-        recordUiId = recordUiId
+        recordUiId = recordUiId,
+        onAction = { action ->
+            viewModel.onAction(action)
+        }
     )
+
 }
 
 @Composable
 fun RecordScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: RecordViewModel = hiltViewModel(),
     state: RecordState,
-    recordUiId: String = ""
+    recordUiId: String = "",
+    onAction: (RecordAction) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
             AddRoundButton(
                 onClick = {
-                    viewModel.onAction(RecordAction.OnAddRoundClick)
+                    onAction(RecordAction.OnAddRoundClick)
                 }
             )
         }
@@ -67,7 +73,7 @@ fun RecordScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(contentPaddings)
         ) {
             Text(
@@ -142,7 +148,8 @@ private fun RecordScreenPreview() {
             rememberNavController(),
             state = RecordState(
                 recordUi = previewRecordUi
-            )
+            ),
+            onAction = {}
         )
     }
 }

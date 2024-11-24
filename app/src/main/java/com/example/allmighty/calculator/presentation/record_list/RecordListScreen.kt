@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.allmighty.calculator.presentation.record.RecordAction
 import com.example.allmighty.calculator.presentation.record.component.AddRoundButton
 import com.example.allmighty.calculator.presentation.record.previewRecordUi
 import com.example.allmighty.calculator.presentation.record_list.component.RecordItem
@@ -25,12 +26,17 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
 fun RecordListScreenRoot(
+    modifier : Modifier = Modifier,
     navController: NavController,
     viewModel: RecordListViewModel = hiltViewModel()
 ) {
     RecordListScreen(
+        modifier = modifier,
         navController = navController,
-        state = viewModel.state.collectAsStateWithLifecycle().value
+        state = viewModel.state.collectAsStateWithLifecycle().value,
+        onAction = { action ->
+            viewModel.onAction(action)
+        }
     )
 }
 
@@ -38,14 +44,14 @@ fun RecordListScreenRoot(
 fun RecordListScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: RecordListViewModel = hiltViewModel(),
-    state: RecordListState
+    state: RecordListState,
+    onAction: (RecordListAction) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
             AddRoundButton(
                 onClick = {
-                    viewModel.onAction(RecordListAction.OnCreateRecord)
+                    navController.navigate(Screen.AddRecordScreen.route)
                 }
             )
         }
@@ -84,7 +90,8 @@ private fun RecordListScreenPreview() {
             rememberNavController(),
             state = RecordListState(
                 (1..100).map { previewRecordUi }
-            )
+            ),
+            onAction = {}
         )
     }
 }
