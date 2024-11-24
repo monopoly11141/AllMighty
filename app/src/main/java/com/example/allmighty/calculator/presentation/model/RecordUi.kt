@@ -6,7 +6,7 @@ import java.time.ZoneId
 import java.util.Locale
 
 data class RecordUi(
-    val id: String = "",
+    val id: Int = 0,
     val title: String = "",
     val createdTime: DisplayableTime = DisplayableTime(),
     val playerUiList: List<PlayerUi> = emptyList(),

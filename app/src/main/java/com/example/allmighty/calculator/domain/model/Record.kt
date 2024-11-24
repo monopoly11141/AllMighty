@@ -1,12 +1,16 @@
 package com.example.allmighty.calculator.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
 import com.example.allmighty.calculator.presentation.model.RoundUi
 import com.example.allmighty.calculator.presentation.model.toDisplayableTime
 
+@Entity(tableName = "record_database")
 data class Record(
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val title: String,
     val createdTime: Long,
     val playerList: List<String>,

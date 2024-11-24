@@ -68,6 +68,10 @@ dependencies {
     implementation(libs.bundles.dagger.hilt)
     kapt(libs.bundles.dagger.hilt.kapt)
 
+    //room
+    implementation(libs.bundles.room)
+    kapt(libs.bundles.room.kapt)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -75,4 +79,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 }

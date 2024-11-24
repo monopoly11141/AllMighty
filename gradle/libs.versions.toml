@@ -13,6 +13,9 @@ composeNavigation = "2.8.4"
 serialization = "1.6.3"
 hiltAndroid = "2.52"
 hiltNavigation = "1.2.0"
+workRuntimeKtx = "2.10.0"
+roomKtx = "2.6.1"
+gson = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +38,11 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -68,4 +76,15 @@ dagger-hilt = [
 
 dagger-hilt-kapt = [
     "hilt-android-compiler"
+]
+
+room = [
+    "androidx-room-ktx",
+    "androidx-work-runtime-ktx",
+    "androidx-room-runtime",
+    "gson"
+]
+
+room-kapt = [
+    "androidx-room-room-compiler"
 ]

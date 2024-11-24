@@ -12,5 +12,7 @@ interface RecordRepository {
 
     suspend fun deleteAllRecord()
 
+    suspend fun deleteRecord(record: Record)
+
     suspend fun updateRecord(record: Record)
 }
