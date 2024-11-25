@@ -38,10 +38,12 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
 fun RecordScreenRoot(
+    modifier : Modifier = Modifier,
     navController: NavController,
     viewModel: RecordViewModel = hiltViewModel(),
 ) {
     RecordScreen(
+        modifier = modifier,
         navController = navController,
         state = viewModel.state.collectAsStateWithLifecycle().value,
         onAction = { action ->
