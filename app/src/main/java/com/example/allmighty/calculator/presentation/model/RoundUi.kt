@@ -26,3 +26,12 @@ fun Int.toDisplayableNumber(): DisplayableNumber {
     )
 }
 
+fun RoundUi.toRound() : Round {
+    return Round(
+        mightyPlayerIndex = this.mightyPlayerIndex,
+        friendPlayerIndex = this.friendPlayerIndex,
+        trumpSuit = this.trumpSuit,
+        pledgeNumber = this.pledgeNumber,
+        actualNumber = this.actualNumber
+    )
+}

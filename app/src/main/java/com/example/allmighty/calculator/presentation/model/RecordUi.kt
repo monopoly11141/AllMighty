@@ -1,5 +1,6 @@
 package com.example.allmighty.calculator.presentation.model
 
+import com.example.allmighty.calculator.domain.model.Record
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -26,5 +27,16 @@ fun Long.toDisplayableTime(): DisplayableTime {
     return DisplayableTime(
         value = this,
         formatted = format.format(dateTime)
+    )
+}
+
+fun RecordUi.toRecord(): Record {
+    return Record(
+        id = this.id,
+        title = this.title,
+        createdTime = this.createdTime.value,
+        playerList = this.playerUiList.map { playerUi -> playerUi.name },
+        playerScoreList = this.playerUiList.map { playerUi -> playerUi.score },
+        roundList = this.roundUiList.map { roundUiList -> roundUiList.toRound() }
     )
 }
