@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
+import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,12 +24,41 @@ class AddRoundViewModel @Inject constructor(
     val state = _state
         .onStart {
             initPlayerList()
+            initPledgeNumber()
         }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
             AddRoundState()
         )
+
+    fun onAction(action: AddRoundAction) {
+        when (action) {
+            is AddRoundAction.OnMightyPlayerIndexChange -> {
+                onMightyPlayerChange(action.mightyPlayerIndex)
+            }
+
+            is AddRoundAction.OnFriendPlayerIndexChange -> {
+                onFriendPlayerChange(action.friendPlayerIndex)
+            }
+
+            is AddRoundAction.OnPledgeNumberChange -> {
+                onPledgeNumberChange(action.pledgeNumber)
+            }
+
+            is AddRoundAction.OnActualNumberChange -> {
+                onActualNumberChange(action.actualNumber)
+            }
+
+            is AddRoundAction.OnTrumpSuitChange -> {
+                onTrumpSuitChange(action.trumpSuit)
+            }
+
+            is AddRoundAction.OnAddRoundClick -> {
+                //TODO : Add to room db
+            }
+        }
+    }
 
     private fun initPlayerList() {
         viewModelScope.launch {
@@ -41,7 +71,7 @@ class AddRoundViewModel @Inject constructor(
             record?.let { thisRecord ->
                 _state.update {
                     it.copy(
-                        playerList = thisRecord.playerList
+                        playerNameList = thisRecord.playerList
                     )
                 }
             }
@@ -49,11 +79,52 @@ class AddRoundViewModel @Inject constructor(
         }
     }
 
-    fun onAction(action: AddRoundAction) {
-        when (action) {
-            AddRoundAction.OnAddRoundClick -> {
-
-            }
+    private fun initPledgeNumber() {
+        _state.update {
+            it.copy(
+                pledgeNumber = PLEDGE_DEFAULT_NUMBER
+            )
         }
     }
+
+    private fun onMightyPlayerChange(mightyPlayerIndex: Int) {
+        _state.update {
+            it.copy(
+                mightyPlayerIndex = mightyPlayerIndex
+            )
+        }
+    }
+
+    private fun onFriendPlayerChange(friendPlayerIndex: Int) {
+        _state.update {
+            it.copy(
+                friendPlayerIndex = friendPlayerIndex
+            )
+        }
+    }
+
+    private fun onPledgeNumberChange(pledgeNumber: Int) {
+        _state.update {
+            it.copy(
+                pledgeNumber = pledgeNumber
+            )
+        }
+    }
+
+    private fun onActualNumberChange(actualNumber: Int) {
+        _state.update {
+            it.copy(
+                actualNumber = actualNumber
+            )
+        }
+    }
+
+    private fun onTrumpSuitChange(trumpSuit: String) {
+        _state.update {
+            it.copy(
+                trumpSuit = trumpSuit
+            )
+        }
+    }
+
 }

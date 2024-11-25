@@ -1,6 +1,5 @@
 package com.example.allmighty.calculator.presentation.record
 
-import android.view.Display
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.allmighty.calculator.presentation.add_record.AddRecordAction
 import com.example.allmighty.calculator.presentation.model.DisplayableTime
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
@@ -38,7 +36,7 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
 fun RecordScreenRoot(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: RecordViewModel = hiltViewModel(),
 ) {
@@ -64,7 +62,7 @@ fun RecordScreen(
         floatingActionButton = {
             AddRoundButton(
                 onClick = {
-                    onAction(RecordAction.OnAddRoundClick)
+                    navController.navigate("${Screen.AddRoundScreen.route}/${state.recordUi.id}")
                 }
             )
         }

@@ -122,7 +122,6 @@ private fun RoundItemPreview() {
             roundUi = previewRoundUi,
             onClick = {},
             modifier = Modifier
-
         )
     }
 }
