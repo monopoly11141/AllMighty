@@ -1,6 +1,6 @@
 package com.example.allmighty.calculator.presentation.model
 
-import com.example.allmighty.calculator.domain.model.Record
+import com.example.allmighty.calculator.data.model.Record
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId

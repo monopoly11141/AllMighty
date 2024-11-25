@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
+import com.example.allmighty.calculator.data.model.Round
+import com.example.allmighty.calculator.presentation.model.TrumpSuit
 import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,7 @@ class AddRoundViewModel @Inject constructor(
         .onStart {
             initPlayerList()
             initPledgeNumber()
+            initActualNumber()
         }
         .stateIn(
             viewModelScope,
@@ -51,11 +54,11 @@ class AddRoundViewModel @Inject constructor(
             }
 
             is AddRoundAction.OnTrumpSuitChange -> {
-                onTrumpSuitChange(action.trumpSuit)
+                onTrumpSuitChange(action.trumpSuitIndex)
             }
 
             is AddRoundAction.OnAddRoundClick -> {
-                //TODO : Add to room db
+                onAddRoundClick()
             }
         }
     }
@@ -83,6 +86,15 @@ class AddRoundViewModel @Inject constructor(
         _state.update {
             it.copy(
                 pledgeNumber = PLEDGE_DEFAULT_NUMBER
+            )
+        }
+    }
+
+
+    private fun initActualNumber() {
+        _state.update {
+            it.copy(
+                actualNumber = PLEDGE_DEFAULT_NUMBER
             )
         }
     }
@@ -119,12 +131,42 @@ class AddRoundViewModel @Inject constructor(
         }
     }
 
-    private fun onTrumpSuitChange(trumpSuit: String) {
+    private fun onTrumpSuitChange(trumpSuitIndex: Int) {
         _state.update {
             it.copy(
-                trumpSuit = trumpSuit
+                trumpSuitIndex = trumpSuitIndex
             )
         }
+    }
+
+    private fun onAddRoundClick() {
+
+        val round = Round(
+            mightyPlayerIndex = _state.value.mightyPlayerIndex,
+            friendPlayerIndex = _state.value.friendPlayerIndex,
+            trumpSuit = TrumpSuit.entries[_state.value.trumpSuitIndex].name,
+            pledgeNumber = _state.value.pledgeNumber,
+            actualNumber = _state.value.actualNumber
+        )
+
+        viewModelScope.launch {
+            val recordUiId = savedStateHandle.get<String>("recordUiId")
+
+            val record = recordUiId?.let {
+                recordDao.getRecordById(it)
+            }
+
+            if (record == null) {
+                throw NullPointerException("Record not found")
+            }
+
+            val newRecord = record.copy(
+                roundList = record.roundList.plus(round)
+            )
+
+            recordDao.updateRecord(newRecord)
+        }
+
     }
 
 }

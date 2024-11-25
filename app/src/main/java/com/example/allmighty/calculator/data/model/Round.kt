@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.domain.model
+package com.example.allmighty.calculator.data.model
 
 import com.example.allmighty.calculator.presentation.model.DisplayableNumber
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber

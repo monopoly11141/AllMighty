@@ -1,6 +1,6 @@
 package com.example.allmighty.calculator.domain.repository
 
-import com.example.allmighty.calculator.domain.model.Record
+import com.example.allmighty.calculator.data.model.Record
 import kotlinx.coroutines.flow.Flow
 
 interface RecordRepository {

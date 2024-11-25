@@ -12,6 +12,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.chargemap.compose.numberpicker.NumberPicker
+import com.example.allmighty.calculator.presentation.util.PledgeUtil.HIGH_BOUND
+import com.example.allmighty.calculator.presentation.util.PledgeUtil.LOW_BOUND
+import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
@@ -55,9 +58,9 @@ private fun TrickNumberPickerPreview() {
     AllMightyTheme {
         TrickNumberPicker(
             text = "공약 수: ",
-            defaultValue = 12,
-            lowBound = 0,
-            highBound = 20
+            defaultValue = PLEDGE_DEFAULT_NUMBER,
+            lowBound = LOW_BOUND,
+            highBound = HIGH_BOUND
         ) {
 
         }

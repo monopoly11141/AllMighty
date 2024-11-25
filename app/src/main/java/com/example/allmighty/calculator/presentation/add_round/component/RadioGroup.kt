@@ -14,16 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.allmighty.calculator.presentation.model.RoundUi
-import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
+import com.example.allmighty.calculator.presentation.model.TrumpSuit
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
-fun PlayerRadioGroup(
+fun RadioGroup(
     modifier: Modifier = Modifier,
     text: String,
-    playerNameList: List<String>,
-    selectedPlayerIndex: Int,
+    optionList: List<String>,
+    selectedIndex: Int,
     onclick: (Int) -> Unit
 ) {
     Column(
@@ -42,13 +41,13 @@ fun PlayerRadioGroup(
         Row(
             modifier = modifier
         ) {
-            playerNameList.forEachIndexed { index, playerName ->
+            optionList.forEachIndexed { index, playerName ->
                 Column() {
-                    PlayerRadioButton(
+                    RadioButton(
                         modifier = modifier,
-                        playerName = playerName,
-                        playerIndex = index,
-                        selectedPlayerIndex = selectedPlayerIndex
+                        option = playerName,
+                        index = index,
+                        selectedIndex = selectedIndex
                     ) {
                         onclick(index)
                     }
@@ -61,20 +60,20 @@ fun PlayerRadioGroup(
 }
 
 @Composable
-private fun PlayerRadioButton(
+private fun RadioButton(
     modifier: Modifier = Modifier,
-    playerName: String,
-    playerIndex: Int,
-    selectedPlayerIndex: Int,
+    option: String,
+    index: Int,
+    selectedIndex: Int,
     onClick: (Int) -> Unit
 ) {
     RadioButton(
         modifier = modifier,
-        selected = playerIndex == selectedPlayerIndex,
-        onClick = { onClick(selectedPlayerIndex) },
+        selected = index == selectedIndex,
+        onClick = { onClick(selectedIndex) },
     )
     Text(
-        text = playerName,
+        text = option,
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
             .padding(horizontal = 4.dp),
@@ -86,10 +85,23 @@ private fun PlayerRadioButton(
 @Composable
 private fun PlayerRadioGroupPreview() {
     AllMightyTheme {
-        PlayerRadioGroup(
+        RadioGroup(
             text = "마이티 플레이어 :",
-            playerNameList = playerNameList,
-            selectedPlayerIndex = 0,
+            optionList = playerNameList,
+            selectedIndex = 0,
+            onclick = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun TrumpSuitRadioGroupPreview() {
+    AllMightyTheme {
+        RadioGroup(
+            text = "기루다 :",
+            optionList = TrumpSuit.entries.map { it.name },
+            selectedIndex = 0,
             onclick = {},
         )
     }

@@ -1,10 +1,12 @@
-package com.example.allmighty.calculator.domain.model
+package com.example.allmighty.calculator.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
 import com.example.allmighty.calculator.presentation.model.RoundUi
+import com.example.allmighty.calculator.presentation.model.TrumpSuit
+import com.example.allmighty.calculator.presentation.model.findTrumpSuit
 import com.example.allmighty.calculator.presentation.model.toDisplayableTime
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -35,7 +37,7 @@ fun Record.toRecordUi(): RecordUi {
                 playerNameList = playerList,
                 mightyPlayerIndex = round.mightyPlayerIndex,
                 friendPlayerIndex = round.friendPlayerIndex,
-                trumpSuit = round.trumpSuit,
+                trumpSuit = round.trumpSuit.findTrumpSuit() ?: TrumpSuit.스페이드,
                 pledgeNumber = round.pledgeNumber,
                 actualNumber = round.actualNumber,
                 scoreChange = round.getScoreChange()

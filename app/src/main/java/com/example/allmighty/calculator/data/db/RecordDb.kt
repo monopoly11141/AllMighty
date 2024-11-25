@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.allmighty.calculator.data.db.converter.IntListConverter
 import com.example.allmighty.calculator.data.db.converter.RoundListConverter
 import com.example.allmighty.calculator.data.db.converter.StringListConverter
-import com.example.allmighty.calculator.domain.model.Record
+import com.example.allmighty.calculator.data.model.Record
 
 @Database(
     entities = [Record::class],

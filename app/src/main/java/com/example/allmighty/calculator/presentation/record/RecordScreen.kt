@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -58,6 +59,10 @@ fun RecordScreen(
     state: RecordState,
     onAction: (RecordAction) -> Unit
 ) {
+    LaunchedEffect(true) {
+        onAction(RecordAction.UpdateRecord)
+    }
+    
     Scaffold(
         floatingActionButton = {
             AddRoundButton(

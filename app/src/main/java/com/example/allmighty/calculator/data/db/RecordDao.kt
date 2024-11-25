@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.allmighty.calculator.domain.model.Record
+import com.example.allmighty.calculator.data.model.Record
 import kotlinx.coroutines.flow.Flow
 
 @Dao

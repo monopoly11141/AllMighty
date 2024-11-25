@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.allmighty.calculator.presentation.model.RoundUi
+import com.example.allmighty.calculator.presentation.model.TrumpSuit
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
 import com.example.allmighty.core.presentation.util.getContentColor
 import com.example.allmighty.ui.theme.AllMightyTheme
@@ -136,7 +137,7 @@ internal val previewRoundUi = RoundUi(
     ),
     mightyPlayerIndex = 1,
     friendPlayerIndex = 3,
-    trumpSuit = "Spades",
+    trumpSuit = TrumpSuit.스페이드,
     pledgeNumber = 14,
     actualNumber = 16,
     scoreChange = listOf(-4, 4, -4, 2, -4).map { it -> it.toDisplayableNumber() }

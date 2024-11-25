@@ -1,7 +1,7 @@
 package com.example.allmighty.calculator.data.db.converter
 
 import androidx.room.TypeConverter
-import com.example.allmighty.calculator.domain.model.Round
+import com.example.allmighty.calculator.data.model.Round
 import com.google.gson.Gson
 
 class RoundListConverter {

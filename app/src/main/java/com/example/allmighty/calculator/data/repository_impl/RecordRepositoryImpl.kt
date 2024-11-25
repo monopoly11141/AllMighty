@@ -1,7 +1,7 @@
 package com.example.allmighty.calculator.data.repository_impl
 
 import com.example.allmighty.calculator.data.db.RecordDao
-import com.example.allmighty.calculator.domain.model.Record
+import com.example.allmighty.calculator.data.model.Record
 import com.example.allmighty.calculator.domain.repository.RecordRepository
 import kotlinx.coroutines.flow.Flow
 
