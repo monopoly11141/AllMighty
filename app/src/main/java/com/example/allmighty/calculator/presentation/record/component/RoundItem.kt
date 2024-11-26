@@ -7,14 +7,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.allmighty.calculator.presentation.model.RoundUi
@@ -25,93 +31,132 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
 fun RoundItem(
+    roundNumber: Int,
     roundUi: RoundUi,
-    onClick: () -> Unit,
+    onDeleteClick : () -> Unit,
+    onEditClick : () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .clickable(onClick = onClick)
-            .padding(4.dp)
-            .background(MaterialTheme.colorScheme.background),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(2.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .weight(1f)
+
+        Row(
+            modifier = modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
+
+            IconButton(
+                onClick = { onDeleteClick() }
             ) {
-                Text(
-                    text = "공약 : ${roundUi.pledgeNumber}",
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Text(
-                    text = "실제 : ${roundUi.actualNumber}",
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Text(
-                    text = "기루 : ${roundUi.trumpSuit}",
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                Icon(
+                    imageVector = Icons.Outlined.Delete,
+                    contentDescription = "delete",
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
-
-            HorizontalDivider(
-                color = getContentColor()
+            
+            Text(
+                text = "$roundNumber 라운드",
+                modifier = modifier
+                    .weight(1f),
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.ExtraBold
             )
 
-            roundUi.playerNameList.forEachIndexed { index, playerName ->
+            IconButton(
+                onClick = { onEditClick() }
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Edit,
+                    contentDescription = "edit",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
 
-                val fontColor = when (index) {
-                    roundUi.mightyPlayerIndex -> MaterialTheme.colorScheme.primary
-                    roundUi.friendPlayerIndex -> MaterialTheme.colorScheme.primary
-                    else -> getContentColor()
+        }
+
+
+        Row(
+            modifier = modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Text(
+                text = "공약 : ${roundUi.pledgeNumber}",
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Text(
+                text = "실제 : ${roundUi.actualNumber}",
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Text(
+                text = "기루 : ${roundUi.trumpSuit}",
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        HorizontalDivider(
+            color = getContentColor(),
+            modifier = Modifier
+                .padding(horizontal = 4.dp)
+        )
+
+        roundUi.playerNameList.forEachIndexed { index, playerName ->
+
+            val fontColor = when (index) {
+                roundUi.mightyPlayerIndex -> MaterialTheme.colorScheme.primary
+                roundUi.friendPlayerIndex -> MaterialTheme.colorScheme.primary
+                else -> getContentColor()
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(40.dp)
+            ) {
+                Text(
+                    text = playerName,
+                    fontWeight = FontWeight.Bold,
+                    color = fontColor
+                )
+
+                Text(
+                    text = roundUi.scoreChange[index].formatted,
+                    color = fontColor
+                )
+
+                if (index == roundUi.mightyPlayerIndex) {
+                    Text(
+                        text = "마이티",
+                        color = fontColor
+                    )
                 }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(40.dp)
-                ) {
+                if (index == roundUi.friendPlayerIndex) {
                     Text(
-                        text = playerName,
-                        fontWeight = FontWeight.Bold,
+                        text = "친구",
                         color = fontColor
                     )
-
-                    Text(
-                        text = roundUi.scoreChange[index].formatted,
-                        color = fontColor
-                    )
-
-                    if (index == roundUi.mightyPlayerIndex) {
-                        Text(
-                            text = "마이티",
-                            color = fontColor
-                        )
-                    }
-                    if (index == roundUi.friendPlayerIndex) {
-                        Text(
-                            text = "친구",
-                            color = fontColor
-                        )
-                    }
-
                 }
 
             }
+
         }
     }
+
 
 }
 
@@ -120,8 +165,10 @@ fun RoundItem(
 private fun RoundItemPreview() {
     AllMightyTheme {
         RoundItem(
+            roundNumber = 1,
             roundUi = previewRoundUi,
-            onClick = {},
+            onDeleteClick = {},
+            onEditClick = {},
             modifier = Modifier
         )
     }

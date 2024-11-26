@@ -4,6 +4,5 @@ import com.example.allmighty.calculator.presentation.model.RecordUi
 import com.example.allmighty.calculator.presentation.model.RoundUi
 
 data class RecordState(
-    val recordUi: RecordUi = RecordUi(),
-    val selectedRound: RoundUi? = null
+    val recordUi: RecordUi = RecordUi()
 )

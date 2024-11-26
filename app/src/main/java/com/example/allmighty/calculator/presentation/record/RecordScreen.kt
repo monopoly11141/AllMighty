@@ -60,9 +60,9 @@ fun RecordScreen(
     onAction: (RecordAction) -> Unit
 ) {
     LaunchedEffect(true) {
-        onAction(RecordAction.UpdateRecord)
+        onAction(RecordAction.GetRecord)
     }
-    
+
     Scaffold(
         floatingActionButton = {
             AddRoundButton(
@@ -111,18 +111,11 @@ fun RecordScreen(
                     items = state.recordUi.roundUiList
                 ) { index, roundUi ->
 
-                    Text(
-                        text = "${index + 1} 라운드",
-                        modifier = modifier
-                            .fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.primary,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.ExtraBold
-                    )
-
                     RoundItem(
+                        roundNumber = index + 1,
                         roundUi = roundUi,
-                        onClick = { /*TODO*/ },
+                        onDeleteClick = { onAction(RecordAction.OnDeleteRoundClick(roundUi)) },
+                        onEditClick = { /*TODO*/ },
                         modifier = Modifier
                             .fillMaxWidth()
                     )

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
 import com.example.allmighty.calculator.data.model.toRecordUi
+import com.example.allmighty.calculator.presentation.model.RoundUi
+import com.example.allmighty.calculator.presentation.model.toRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -53,18 +55,22 @@ class RecordViewModel @Inject constructor(
 
     fun onAction(action: RecordAction) {
         when (action) {
-            is RecordAction.OnRoundClick -> {
-                
+            is RecordAction.GetRecord -> {
+                getRecord()
             }
 
-            is RecordAction.UpdateRecord -> {
-                onAddRoundClick()
+            is RecordAction.OnDeleteRoundClick -> {
+                onDeleteRoundClick(action.roundUi)
             }
+
+            is RecordAction.OnEditRoundClick -> {
+                onEditRoundClick()
+            }
+
         }
     }
 
-    private fun onAddRoundClick() {
-
+    private fun getRecord() {
         viewModelScope.launch {
             val recordUiId =
                 savedStateHandle.get<String>("recordUiId") ?: throw NullPointerException("recordUiID is null")
@@ -76,7 +82,33 @@ class RecordViewModel @Inject constructor(
                     recordUi = record.toRecordUi()
                 )
             }
+
+        }
+    }
+
+    private fun onDeleteRoundClick(roundUi: RoundUi) {
+
+        val roundUiList = _state.value.recordUi.roundUiList.toMutableList()
+        roundUiList.remove(roundUi)
+
+        var recordUi = _state.value.recordUi
+        recordUi = recordUi.copy(
+            roundUiList = roundUiList
+        )
+
+        _state.update {
+            it.copy(
+                recordUi = recordUi
+            )
         }
 
+        viewModelScope.launch {
+            recordDao.updateRecord(_state.value.recordUi.toRecord())
+        }
+
+    }
+
+    private fun onEditRoundClick() {
+        TODO("Not yet implemented")
     }
 }
