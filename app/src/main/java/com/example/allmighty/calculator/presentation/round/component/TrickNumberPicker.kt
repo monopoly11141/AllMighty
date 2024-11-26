@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_round.component
+package com.example.allmighty.core.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,9 +12,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.chargemap.compose.numberpicker.NumberPicker
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.HIGH_BOUND
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.LOW_BOUND
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
+import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.HIGH_BOUND
+import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.LOW_BOUND
+import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable

@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.allmighty.calculator.presentation.core.util.getContentColor
 import com.example.allmighty.calculator.presentation.model.DisplayableTime
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi
@@ -31,7 +32,6 @@ import com.example.allmighty.calculator.presentation.record.component.AddRoundBu
 import com.example.allmighty.calculator.presentation.record.component.RoundItem
 import com.example.allmighty.calculator.presentation.record.component.RoundSummary
 import com.example.allmighty.calculator.presentation.record.component.previewRoundUi
-import com.example.allmighty.core.presentation.util.getContentColor
 import com.example.allmighty.navigation.Screen
 import com.example.allmighty.ui.theme.AllMightyTheme
 
@@ -115,7 +115,9 @@ fun RecordScreen(
                         roundNumber = index + 1,
                         roundUi = roundUi,
                         onDeleteClick = { onAction(RecordAction.OnDeleteRoundClick(roundUi)) },
-                        onEditClick = { /*TODO*/ },
+                        onEditClick = {
+                            navController.navigate("${Screen.EditRoundScreen.route}/${state.recordUi.id}/${index}")
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                     )

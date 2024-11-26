@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.allmighty.calculator.presentation.add_record.AddRecordScreenRoot
 import com.example.allmighty.calculator.presentation.add_round.AddRoundScreenRoot
+import com.example.allmighty.calculator.presentation.add_round.EditRoundScreenRoot
 import com.example.allmighty.calculator.presentation.record.RecordScreenRoot
 import com.example.allmighty.calculator.presentation.record_list.RecordListScreenRoot
 
@@ -48,6 +49,21 @@ fun Navigation(
             )
         ) {
             AddRoundScreenRoot(
+                navController = navHostController
+            )
+        }
+
+        composable(route = "${Screen.EditRoundScreen.route}/{recordUiId}/{roundIndex}",
+            arguments = listOf(
+                navArgument("recordUiId") {
+                    type = NavType.StringType
+                },
+                navArgument("roundIndex") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            EditRoundScreenRoot(
                 navController = navHostController
             )
         }

@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_round
+package com.example.allmighty.calculator.presentation.round
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
 import com.example.allmighty.calculator.data.model.Round
 import com.example.allmighty.calculator.presentation.model.TrumpSuit
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,85 +16,75 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddRoundViewModel @Inject constructor(
+class EditRoundViewModel @Inject constructor(
     private val recordDao: RecordDao,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AddRoundState())
+    private val _state = MutableStateFlow(RoundState())
     val state = _state
         .onStart {
-            initPlayerList()
-            initPledgeNumber()
-            initActualNumber()
+            initState()
         }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            AddRoundState()
+            RoundState()
         )
 
-    fun onAction(action: AddRoundAction) {
+    fun onAction(action: RoundAction) {
         when (action) {
-            is AddRoundAction.OnMightyPlayerIndexChange -> {
+            is RoundAction.OnMightyPlayerIndexChange -> {
                 onMightyPlayerChange(action.mightyPlayerIndex)
             }
 
-            is AddRoundAction.OnFriendPlayerIndexChange -> {
+            is RoundAction.OnFriendPlayerIndexChange -> {
                 onFriendPlayerChange(action.friendPlayerIndex)
             }
 
-            is AddRoundAction.OnPledgeNumberChange -> {
+            is RoundAction.OnPledgeNumberChange -> {
                 onPledgeNumberChange(action.pledgeNumber)
             }
 
-            is AddRoundAction.OnActualNumberChange -> {
+            is RoundAction.OnActualNumberChange -> {
                 onActualNumberChange(action.actualNumber)
             }
 
-            is AddRoundAction.OnTrumpSuitChange -> {
+            is RoundAction.OnTrumpSuitChange -> {
                 onTrumpSuitChange(action.trumpSuitIndex)
             }
 
-            is AddRoundAction.OnAddRoundClick -> {
-                onAddRoundClick()
+            is RoundAction.OnRoundButtonClick -> {
+                onRoundButtonClick()
             }
         }
     }
 
-    private fun initPlayerList() {
+    private fun initState() {
         viewModelScope.launch {
             val recordUiId = savedStateHandle.get<String>("recordUiId")
+            val roundIndex =
+                savedStateHandle.get<Int>("roundIndex") ?: throw NullPointerException("Round does not Exist")
 
             val record = recordUiId?.let {
                 recordDao.getRecordById(it)
             }
 
-            record?.let { thisRecord ->
+            record?.let { currentRecord ->
+                val currentRound = currentRecord.roundList[roundIndex]
+
                 _state.update {
                     it.copy(
-                        playerNameList = thisRecord.playerList
+                        playerNameList = currentRecord.playerList,
+                        mightyPlayerIndex = currentRound.mightyPlayerIndex,
+                        friendPlayerIndex = currentRound.friendPlayerIndex,
+                        trumpSuitIndex = TrumpSuit.entries.indexOf(TrumpSuit.valueOf(currentRound.trumpSuit)),
+                        pledgeNumber = currentRound.pledgeNumber,
+                        actualNumber = currentRound.actualNumber
                     )
                 }
             }
 
-        }
-    }
-
-    private fun initPledgeNumber() {
-        _state.update {
-            it.copy(
-                pledgeNumber = PLEDGE_DEFAULT_NUMBER
-            )
-        }
-    }
-
-
-    private fun initActualNumber() {
-        _state.update {
-            it.copy(
-                actualNumber = PLEDGE_DEFAULT_NUMBER
-            )
         }
     }
 
@@ -139,7 +128,7 @@ class AddRoundViewModel @Inject constructor(
         }
     }
 
-    private fun onAddRoundClick() {
+    private fun onRoundButtonClick() {
 
         val round = Round(
             mightyPlayerIndex = _state.value.mightyPlayerIndex,
@@ -151,6 +140,8 @@ class AddRoundViewModel @Inject constructor(
 
         viewModelScope.launch {
             val recordUiId = savedStateHandle.get<String>("recordUiId")
+            val roundIndex =
+                savedStateHandle.get<Int>("roundIndex") ?: throw NullPointerException("Round does not Exist")
 
             val record = recordUiId?.let {
                 recordDao.getRecordById(it)
@@ -160,8 +151,11 @@ class AddRoundViewModel @Inject constructor(
                 throw NullPointerException("Record not found")
             }
 
+            val roundList = record.roundList.toMutableList()
+            roundList[roundIndex] = round
+
             val newRecord = record.copy(
-                roundList = record.roundList.plus(round)
+                roundList = roundList
             )
 
             recordDao.updateRecord(newRecord)

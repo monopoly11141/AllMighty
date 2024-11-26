@@ -16,13 +16,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.allmighty.calculator.presentation.add_round.component.RadioGroup
-import com.example.allmighty.calculator.presentation.add_round.component.SaveRoundButton
-import com.example.allmighty.calculator.presentation.add_round.component.TrickNumberPicker
-import com.example.allmighty.calculator.presentation.add_round.component.playerNameList
+import com.example.allmighty.calculator.presentation.round.RoundAction
+import com.example.allmighty.calculator.presentation.core.RadioGroup
+import com.example.allmighty.calculator.presentation.round.RoundState
+import com.example.allmighty.calculator.presentation.core.playerNameList
+import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.HIGH_BOUND
+import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.LOW_BOUND
 import com.example.allmighty.calculator.presentation.model.TrumpSuit
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.HIGH_BOUND
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.LOW_BOUND
+import com.example.allmighty.calculator.presentation.round.AddRoundViewModel
+import com.example.allmighty.calculator.presentation.round.component.RoundButton
+import com.example.allmighty.core.presentation.component.TrickNumberPicker
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
@@ -45,8 +48,8 @@ fun AddRoundScreenRoot(
 fun AddRoundScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    state: AddRoundState,
-    onAction: (AddRoundAction) -> Unit
+    state: RoundState,
+    onAction: (RoundAction) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -59,7 +62,7 @@ fun AddRoundScreen(
             optionList = state.playerNameList,
             selectedIndex = state.mightyPlayerIndex
         ) { index ->
-            onAction(AddRoundAction.OnMightyPlayerIndexChange(index))
+            onAction(RoundAction.OnMightyPlayerIndexChange(index))
         }
 
         HorizontalDivider(
@@ -71,7 +74,7 @@ fun AddRoundScreen(
             optionList = state.playerNameList,
             selectedIndex = state.friendPlayerIndex
         ) { index ->
-            onAction(AddRoundAction.OnFriendPlayerIndexChange(index))
+            onAction(RoundAction.OnFriendPlayerIndexChange(index))
         }
 
         HorizontalDivider(
@@ -83,7 +86,7 @@ fun AddRoundScreen(
             optionList = TrumpSuit.entries.map { it.name },
             selectedIndex = state.trumpSuitIndex
         ) { index ->
-            onAction(AddRoundAction.OnTrumpSuitChange(index))
+            onAction(RoundAction.OnTrumpSuitChange(index))
         }
 
         HorizontalDivider(
@@ -102,7 +105,7 @@ fun AddRoundScreen(
                 lowBound = LOW_BOUND,
                 highBound = HIGH_BOUND
             ) { pledgeNumber ->
-                onAction(AddRoundAction.OnPledgeNumberChange(pledgeNumber))
+                onAction(RoundAction.OnPledgeNumberChange(pledgeNumber))
             }
 
             TrickNumberPicker(
@@ -111,14 +114,14 @@ fun AddRoundScreen(
                 lowBound = LOW_BOUND,
                 highBound = HIGH_BOUND
             ) { actualNumber ->
-                onAction(AddRoundAction.OnActualNumberChange(actualNumber))
+                onAction(RoundAction.OnActualNumberChange(actualNumber))
             }
         }
 
-        SaveRoundButton(
+        RoundButton(
             text = "라운드 저장",
             onClick = {
-                onAction(AddRoundAction.OnAddRoundClick)
+                onAction(RoundAction.OnRoundButtonClick)
                 navController.popBackStack()
             }
         )
@@ -132,7 +135,7 @@ private fun AddRoundScreenPreview() {
     AllMightyTheme {
         AddRoundScreen(
             navController = rememberNavController(),
-            state = AddRoundState(
+            state = RoundState(
                 playerNameList = playerNameList
             ),
             onAction = {}

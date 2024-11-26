@@ -1,4 +1,4 @@
-package com.example.allmighty.core.presentation.util
+package com.example.allmighty.calculator.presentation.core.util
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

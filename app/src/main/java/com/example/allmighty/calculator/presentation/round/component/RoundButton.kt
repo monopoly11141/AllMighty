@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_round.component
+package com.example.allmighty.calculator.presentation.round.component
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
-fun SaveRoundButton(
+fun RoundButton(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit
@@ -27,7 +27,7 @@ fun SaveRoundButton(
 @Composable
 private fun AddRoundButtonPreview() {
     AllMightyTheme {
-        SaveRoundButton(
+        RoundButton(
             text = "라운드 저장",
             onClick = {}
         )

@@ -1,8 +1,6 @@
-package com.example.allmighty.calculator.presentation.add_round
+package com.example.allmighty.calculator.presentation.round
 
-import com.example.allmighty.calculator.presentation.model.TrumpSuit
-
-data class AddRoundState(
+data class RoundState(
     val playerNameList: List<String> = emptyList(),
     val mightyPlayerIndex: Int = -1,
     val friendPlayerIndex: Int = -1,

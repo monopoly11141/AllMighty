@@ -2,8 +2,8 @@ package com.example.allmighty.calculator.data.model
 
 import com.example.allmighty.calculator.presentation.model.DisplayableNumber
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
-import com.example.allmighty.calculator.presentation.util.PlayerUtil.PLAYER_COUNT
-import com.example.allmighty.calculator.presentation.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
+import com.example.allmighty.calculator.presentation.core.util.PlayerUtil.PLAYER_COUNT
+import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
 
 data class Round(
     val mightyPlayerIndex: Int = -1,

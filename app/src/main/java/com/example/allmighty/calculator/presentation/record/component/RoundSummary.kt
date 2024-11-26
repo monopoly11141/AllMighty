@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
-import com.example.allmighty.core.presentation.util.getContentColor
+import com.example.allmighty.calculator.presentation.core.util.getContentColor
 import com.example.allmighty.ui.theme.AllMightyTheme
 import com.example.allmighty.ui.theme.backgroundDark
 import com.example.allmighty.ui.theme.backgroundLight

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
 import com.example.allmighty.calculator.data.model.Record
-import com.example.allmighty.calculator.presentation.util.PlayerUtil.PLAYER_COUNT
+import com.example.allmighty.calculator.presentation.core.util.PlayerUtil.PLAYER_COUNT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

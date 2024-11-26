@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.util
+package com.example.allmighty.calculator.presentation.core.util
 
 object PledgeUtil {
     const val LOW_BOUND = 0

@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_round.component
+package com.example.allmighty.calculator.presentation.core
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -108,9 +108,9 @@ private fun TrumpSuitRadioGroupPreview() {
 }
 
 internal val playerNameList = listOf(
-        "Player 1",
-        "Player 2",
-        "Player 3",
-        "Player 4",
-        "Player 5"
+    "Player 1",
+    "Player 2",
+    "Player 3",
+    "Player 4",
+    "Player 5"
 )
