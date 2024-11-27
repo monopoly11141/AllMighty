@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.allmighty.calculator.presentation.core.util.getContentColor
+import com.example.allmighty.calculator.presentation.core.getContentColor
 import com.example.allmighty.calculator.presentation.model.DisplayableTime
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.RecordUi

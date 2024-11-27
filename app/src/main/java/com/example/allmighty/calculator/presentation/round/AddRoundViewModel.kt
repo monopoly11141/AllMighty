@@ -5,8 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
 import com.example.allmighty.calculator.data.model.Round
+import com.example.allmighty.calculator.data.model.getScoreChange
+import com.example.allmighty.calculator.data.model.toRecordUi
 import com.example.allmighty.calculator.presentation.model.TrumpSuit
 import com.example.allmighty.calculator.presentation.core.util.PledgeUtil.PLEDGE_DEFAULT_NUMBER
+import com.example.allmighty.calculator.presentation.model.PlayerUi
+import com.example.allmighty.calculator.presentation.model.toRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -160,8 +164,15 @@ class AddRoundViewModel @Inject constructor(
                 throw NullPointerException("Record not found")
             }
 
+            val playerScoreList =  record.playerScoreList.toMutableList()
+
+            round.getScoreChange().mapIndexed{ index, displayableNumber ->
+                playerScoreList[index] += displayableNumber.value
+            }
+
             val newRecord = record.copy(
-                roundList = record.roundList.plus(round)
+                roundList = record.roundList.plus(round),
+                playerScoreList = playerScoreList
             )
 
             recordDao.updateRecord(newRecord)

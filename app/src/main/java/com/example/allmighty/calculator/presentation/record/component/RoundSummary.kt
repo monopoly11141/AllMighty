@@ -1,7 +1,6 @@
 package com.example.allmighty.calculator.presentation.record.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,17 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.allmighty.calculator.presentation.model.PlayerUi
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
-import com.example.allmighty.calculator.presentation.core.util.getContentColor
+import com.example.allmighty.calculator.presentation.core.getContentColor
 import com.example.allmighty.ui.theme.AllMightyTheme
-import com.example.allmighty.ui.theme.backgroundDark
-import com.example.allmighty.ui.theme.backgroundLight
-import com.example.allmighty.ui.theme.onPrimaryContainerDark
 
 @Composable
 fun RoundSummary(

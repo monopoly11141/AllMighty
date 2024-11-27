@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
 import com.example.allmighty.calculator.data.model.Round
+import com.example.allmighty.calculator.data.model.getScoreChange
 import com.example.allmighty.calculator.presentation.model.TrumpSuit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -151,11 +152,23 @@ class EditRoundViewModel @Inject constructor(
                 throw NullPointerException("Record not found")
             }
 
+            val playerScoreList = record.playerScoreList.toMutableList()
+
+            record.roundList[roundIndex].getScoreChange().mapIndexed { index, displayableNumber ->
+                playerScoreList[index] -= displayableNumber.value
+            }
+
+            round.getScoreChange().mapIndexed { index, displayableNumber ->
+                playerScoreList[index] += displayableNumber.value
+            }
+
             val roundList = record.roundList.toMutableList()
             roundList[roundIndex] = round
 
+
             val newRecord = record.copy(
-                roundList = roundList
+                roundList = roundList,
+                playerScoreList = playerScoreList
             )
 
             recordDao.updateRecord(newRecord)

@@ -1,14 +1,12 @@
 package com.example.allmighty.calculator.presentation.record.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.HorizontalDivider
@@ -26,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.allmighty.calculator.presentation.model.RoundUi
 import com.example.allmighty.calculator.presentation.model.TrumpSuit
 import com.example.allmighty.calculator.presentation.model.toDisplayableNumber
-import com.example.allmighty.calculator.presentation.core.util.getContentColor
+import com.example.allmighty.calculator.presentation.core.getContentColor
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
