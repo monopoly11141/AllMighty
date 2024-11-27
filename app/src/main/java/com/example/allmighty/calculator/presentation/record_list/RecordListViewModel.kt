@@ -40,6 +40,7 @@ class RecordListViewModel @Inject constructor(
             is RecordListAction.OnDeleteRecord -> {
                 onDeleteRecord(event.recordId)
             }
+
         }
     }
 

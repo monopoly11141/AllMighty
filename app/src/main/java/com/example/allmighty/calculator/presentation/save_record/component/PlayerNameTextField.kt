@@ -1,23 +1,22 @@
-package com.example.allmighty.calculator.presentation.add_record.component
+package com.example.allmighty.calculator.presentation.save_record.component
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
-fun RecordTitleTextField(
+fun PlayerNameTextField(
     modifier: Modifier = Modifier,
-    titleText: String,
+    nameText: String,
     labelText: String,
     onValueChange: (String) -> Unit,
 ) {
     TextField(
-        value = titleText,
-        onValueChange = { title -> onValueChange(title) },
+        value = nameText,
+        onValueChange = { name -> onValueChange(name) },
         modifier = modifier,
         label = {
             Text(
@@ -27,13 +26,14 @@ fun RecordTitleTextField(
     )
 }
 
+
 @PreviewLightDark
 @Composable
-private fun RecordTitleTextFieldPreview() {
+private fun PlayerNameTextFieldPreview() {
     AllMightyTheme {
-        RecordTitleTextField(
-            titleText = "제목",
-            labelText = "기록 제목을 입력하세요",
+        PlayerNameTextField(
+            nameText = "플레이어 이름",
+            labelText = "플레이어 이름을 입력하세요.",
             onValueChange = {},
         )
     }

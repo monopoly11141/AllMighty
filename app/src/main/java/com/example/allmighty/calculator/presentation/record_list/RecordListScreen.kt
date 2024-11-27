@@ -74,6 +74,9 @@ fun RecordListScreen(
                         },
                         onDeleteClick = {
                             onAction(RecordListAction.OnDeleteRecord(recordUi.id.toString()))
+                        },
+                        onEditClick = {
+                            navController.navigate("${Screen.EditRecordScreen.route}/${recordUi.id}")
                         }
                     )
                 }

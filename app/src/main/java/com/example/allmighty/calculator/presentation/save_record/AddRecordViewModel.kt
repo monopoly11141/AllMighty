@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_record
+package com.example.allmighty.calculator.presentation.save_record
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class AddRecordViewModel @Inject constructor(
     private val recordDao: RecordDao
 ) : ViewModel() {
-    private val _state = MutableStateFlow(AddRecordState())
+    private val _state = MutableStateFlow(SaveRecordState())
     val state = _state
         .onStart {
             initPlayerList()
@@ -26,20 +26,20 @@ class AddRecordViewModel @Inject constructor(
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            AddRecordState()
+            SaveRecordState()
         )
 
-    fun onAction(action: AddRecordAction) {
+    fun onAction(action: SaveRecordAction) {
         when (action) {
-            is AddRecordAction.OnRecordTitleChange -> {
+            is SaveRecordAction.OnRecordTitleChange -> {
                 onRecordTitleChange(action.recordTitle)
             }
 
-            is AddRecordAction.OnPlayerNameChange -> {
+            is SaveRecordAction.OnPlayerNameChange -> {
                 onPlayerNameChange(action.index, action.playerName)
             }
 
-            is AddRecordAction.OnAddRecord -> {
+            is SaveRecordAction.OnSaveRecord -> {
                 onAddRecordAction()
             }
         }

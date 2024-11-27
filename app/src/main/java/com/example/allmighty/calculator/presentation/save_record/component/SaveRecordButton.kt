@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_record.component
+package com.example.allmighty.calculator.presentation.save_record.component
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,7 +32,8 @@ fun RecordItem(
     modifier: Modifier = Modifier,
     recordUi: RecordUi,
     onItemClick: () -> Unit,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    onEditClick: () -> Unit
 ) {
 
     Row(
@@ -79,6 +81,15 @@ fun RecordItem(
             )
 
         }
+
+        IconButton(onClick = { onEditClick() }) {
+
+            Icon(
+                imageVector = Icons.Outlined.Edit,
+                contentDescription = "Edit Record Button"
+            )
+
+        }
     }
 
 
@@ -91,7 +102,8 @@ private fun RecordItemPreview() {
         RecordItem(
             recordUi = previewRecordUi,
             onItemClick = {},
-            onDeleteClick = {}
+            onDeleteClick = {},
+            onEditClick = {}
         )
     }
 }

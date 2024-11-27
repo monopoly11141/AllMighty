@@ -1,4 +1,4 @@
-package com.example.allmighty.calculator.presentation.add_record
+package com.example.allmighty.calculator.presentation.save_record
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,19 +17,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.allmighty.calculator.presentation.add_record.component.AddRecordButton
-import com.example.allmighty.calculator.presentation.add_record.component.PlayerNameTextField
-import com.example.allmighty.calculator.presentation.add_record.component.RecordTitleTextField
+import com.example.allmighty.calculator.presentation.save_record.component.AddRecordButton
+import com.example.allmighty.calculator.presentation.save_record.component.PlayerNameTextField
+import com.example.allmighty.calculator.presentation.save_record.component.RecordTitleTextField
 import com.example.allmighty.navigation.Screen
 import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
-fun AddRecordScreenRoot(
+fun EditRecordScreenRoot(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: AddRecordViewModel = hiltViewModel()
+    viewModel: EditRecordViewModel = hiltViewModel()
 ) {
-    AddRecordScreen(
+    EditRecordScreen(
         modifier = modifier,
         navController = navController,
         state = viewModel.state.collectAsStateWithLifecycle().value,
@@ -40,11 +40,11 @@ fun AddRecordScreenRoot(
 }
 
 @Composable
-fun AddRecordScreen(
+fun EditRecordScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    state: AddRecordState,
-    onAction: (AddRecordAction) -> Unit
+    state: SaveRecordState,
+    onAction: (SaveRecordAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -64,7 +64,7 @@ fun AddRecordScreen(
             titleText = state.recordTitle,
             labelText = "기록 제목을 입력하세요."
         ) { recordTitle ->
-            onAction(AddRecordAction.OnRecordTitleChange(recordTitle))
+            onAction(SaveRecordAction.OnRecordTitleChange(recordTitle))
         }
 
         Spacer(
@@ -82,7 +82,7 @@ fun AddRecordScreen(
                     nameText = state.playerNameList[i],
                     labelText = "플레이어 ${i + 1}의 이름을 입력하세요. "
                 ) { name ->
-                    onAction(AddRecordAction.OnPlayerNameChange(i, name))
+                    onAction(SaveRecordAction.OnPlayerNameChange(i, name))
                 }
 
             }
@@ -96,9 +96,9 @@ fun AddRecordScreen(
         AddRecordButton(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
-            text = "기록 추가"
+            text = "기록 수정"
         ) {
-            onAction(AddRecordAction.OnAddRecord)
+            onAction(SaveRecordAction.OnSaveRecord)
             navController.navigate(Screen.RecordListScreen.route)
         }
 
@@ -109,11 +109,11 @@ fun AddRecordScreen(
 
 @PreviewLightDark
 @Composable
-private fun AddRecordScreenPreview() {
+private fun EditRecordScreenPreview() {
     AllMightyTheme {
         AddRecordScreen(
             navController = rememberNavController(),
-            state = AddRecordState(
+            state = SaveRecordState(
                 playerNameList = listOf(
                     "player 1",
                     "player 2",
