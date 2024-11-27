@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,19 +34,37 @@ class RecordListViewModel @Inject constructor(
     fun onAction(event: RecordListAction) {
         when (event) {
             RecordListAction.OnCreateRecord -> {
-                val recordUiMutableList = _state.value.recordUiList.toMutableList()
+                onCreateRecord()
+            }
 
-                recordUiMutableList.add(
-                    RecordUi()
-                )
-
-                _state.update {
-                    it.copy(
-                        recordUiList = recordUiMutableList
-                    )
-                }
+            is RecordListAction.OnDeleteRecord -> {
+                onDeleteRecord(event.recordId)
             }
         }
+    }
+
+    private fun onCreateRecord() {
+        val recordUiMutableList = _state.value.recordUiList.toMutableList()
+
+        recordUiMutableList.add(
+            RecordUi()
+        )
+
+        _state.update {
+            it.copy(
+                recordUiList = recordUiMutableList
+            )
+        }
+    }
+
+    private fun onDeleteRecord(recordId: String) {
+        viewModelScope.launch {
+            val record = recordDao.getRecordById(recordId) ?: throw NullPointerException("Record does not exist")
+            recordDao.deleteRecord(record)
+
+            getAllRecord()
+        }
+
     }
 
     private fun getAllRecord() {

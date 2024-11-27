@@ -17,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.allmighty.calculator.presentation.record.RecordAction
 import com.example.allmighty.calculator.presentation.record.component.AddRoundButton
 import com.example.allmighty.calculator.presentation.record.previewRecordUi
 import com.example.allmighty.calculator.presentation.record_list.component.RecordItem
@@ -26,7 +25,7 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 
 @Composable
 fun RecordListScreenRoot(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: RecordListViewModel = hiltViewModel()
 ) {
@@ -70,8 +69,11 @@ fun RecordListScreen(
                 items(state.recordUiList) { recordUi ->
                     RecordItem(
                         recordUi = recordUi,
-                        onClick = {
+                        onItemClick = {
                             navController.navigate("${Screen.RecordScreen.route}/${recordUi.id}")
+                        },
+                        onDeleteClick = {
+                            onAction(RecordListAction.OnDeleteRecord(recordUi.id.toString()))
                         }
                     )
                 }

@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,12 +30,13 @@ import com.example.allmighty.ui.theme.AllMightyTheme
 fun RecordItem(
     modifier: Modifier = Modifier,
     recordUi: RecordUi,
-    onClick: () -> Unit,
+    onItemClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
 
     Row(
         modifier = modifier
-            .clickable(onClick = onClick)
+            .clickable(onClick = onItemClick)
             .fillMaxWidth()
             .padding(4.dp)
             .background(
@@ -65,6 +70,15 @@ fun RecordItem(
             color = MaterialTheme.colorScheme.primary,
             fontSize = 16.sp
         )
+
+        IconButton(onClick = { onDeleteClick() }) {
+
+            Icon(
+                imageVector = Icons.Outlined.Delete,
+                contentDescription = "Delete Record Button"
+            )
+
+        }
     }
 
 
@@ -76,7 +90,8 @@ private fun RecordItemPreview() {
     AllMightyTheme {
         RecordItem(
             recordUi = previewRecordUi,
-            onClick = {}
+            onItemClick = {},
+            onDeleteClick = {}
         )
     }
 }
