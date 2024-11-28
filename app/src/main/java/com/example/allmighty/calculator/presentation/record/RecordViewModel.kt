@@ -4,9 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.allmighty.calculator.data.db.RecordDao
+import com.example.allmighty.calculator.data.model.getScoreChange
 import com.example.allmighty.calculator.data.model.toRecordUi
 import com.example.allmighty.calculator.presentation.model.RoundUi
 import com.example.allmighty.calculator.presentation.model.toRecord
+import com.example.allmighty.calculator.presentation.model.toRound
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -63,10 +65,6 @@ class RecordViewModel @Inject constructor(
                 onDeleteRoundClick(action.roundUi)
             }
 
-            is RecordAction.OnEditRoundClick -> {
-                onEditRoundClick()
-            }
-
         }
     }
 
@@ -92,8 +90,25 @@ class RecordViewModel @Inject constructor(
         roundUiList.remove(roundUi)
 
         var recordUi = _state.value.recordUi
+        val playerUiList = recordUi.playerUiList.toMutableList()
+
+        val playerScoreList = recordUi.toRecord().playerScoreList.toMutableList()
+
+        roundUi.scoreChange.mapIndexed {index, displayableNumber ->
+            playerScoreList[index] -= displayableNumber.value
+            playerUiList[index].score -= displayableNumber.value
+        }
+
         recordUi = recordUi.copy(
-            roundUiList = roundUiList
+            roundUiList = roundUiList,
+            playerUiList = playerUiList
+        )
+
+        var newRecord = _state.value.recordUi.toRecord()
+
+        newRecord = newRecord.copy(
+            roundList = recordUi.roundUiList.map {it -> it.toRound()},
+            playerScoreList = playerScoreList
         )
 
         _state.update {
@@ -103,12 +118,8 @@ class RecordViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            recordDao.updateRecord(_state.value.recordUi.toRecord())
+            recordDao.updateRecord(newRecord)
         }
 
-    }
-
-    private fun onEditRoundClick() {
-        TODO("Not yet implemented")
     }
 }

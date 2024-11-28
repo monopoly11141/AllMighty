@@ -4,6 +4,5 @@ import com.example.allmighty.calculator.presentation.model.RoundUi
 
 sealed interface RecordAction {
     data class OnDeleteRoundClick(val roundUi: RoundUi) : RecordAction
-    data class OnEditRoundClick(val roundUi: RoundUi) : RecordAction
     data object GetRecord : RecordAction
 }
