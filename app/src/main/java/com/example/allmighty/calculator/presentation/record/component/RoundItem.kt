@@ -37,7 +37,7 @@ fun RoundItem(
 ) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .padding(2.dp),
         horizontalAlignment = Alignment.CenterHorizontally

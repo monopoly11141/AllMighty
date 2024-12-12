@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,81 +53,86 @@ fun EditRoundScreen(
     state: RoundState,
     onAction: (RoundAction) -> Unit
 ) {
-    Column(
+    Scaffold(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        RadioGroup(
-            text = "마이티 플레이어: ",
-            optionList = state.playerNameList,
-            selectedIndex = state.mightyPlayerIndex
-        ) { index ->
-            onAction(RoundAction.OnMightyPlayerIndexChange(index))
-        }
-
-        HorizontalDivider(
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        RadioGroup(
-            text = "친구 플레이어: ",
-            optionList = state.playerNameList,
-            selectedIndex = state.friendPlayerIndex
-        ) { index ->
-            onAction(RoundAction.OnFriendPlayerIndexChange(index))
-        }
-
-        HorizontalDivider(
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        RadioGroup(
-            text = "기루다: ",
-            optionList = TrumpSuit.entries.map { it.name },
-            selectedIndex = state.trumpSuitIndex
-        ) { index ->
-            onAction(RoundAction.OnTrumpSuitChange(index))
-        }
-
-        HorizontalDivider(
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TrickNumberPicker(
-                text = "공약 수",
-                defaultValue = state.pledgeNumber,
-                lowBound = LOW_BOUND,
-                highBound = HIGH_BOUND
-            ) { pledgeNumber ->
-                onAction(RoundAction.OnPledgeNumberChange(pledgeNumber))
+            RadioGroup(
+                text = "마이티 플레이어: ",
+                optionList = state.playerNameList,
+                selectedIndex = state.mightyPlayerIndex
+            ) { index ->
+                onAction(RoundAction.OnMightyPlayerIndexChange(index))
             }
 
-            TrickNumberPicker(
-                text = "여당 득점",
-                defaultValue = state.actualNumber,
-                lowBound = LOW_BOUND,
-                highBound = HIGH_BOUND
-            ) { actualNumber ->
-                onAction(RoundAction.OnActualNumberChange(actualNumber))
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            RadioGroup(
+                text = "친구 플레이어: ",
+                optionList = state.playerNameList,
+                selectedIndex = state.friendPlayerIndex
+            ) { index ->
+                onAction(RoundAction.OnFriendPlayerIndexChange(index))
             }
+
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            RadioGroup(
+                text = "기루다: ",
+                optionList = TrumpSuit.entries.map { it.name },
+                selectedIndex = state.trumpSuitIndex
+            ) { index ->
+                onAction(RoundAction.OnTrumpSuitChange(index))
+            }
+
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TrickNumberPicker(
+                    text = "공약 수",
+                    defaultValue = state.pledgeNumber,
+                    lowBound = LOW_BOUND,
+                    highBound = HIGH_BOUND
+                ) { pledgeNumber ->
+                    onAction(RoundAction.OnPledgeNumberChange(pledgeNumber))
+                }
+
+                TrickNumberPicker(
+                    text = "여당 득점",
+                    defaultValue = state.actualNumber,
+                    lowBound = LOW_BOUND,
+                    highBound = HIGH_BOUND
+                ) { actualNumber ->
+                    onAction(RoundAction.OnActualNumberChange(actualNumber))
+                }
+            }
+
+            RoundButton(
+                text = "라운드 수정",
+                onClick = {
+                    onAction(RoundAction.OnRoundButtonClick)
+                    navController.popBackStack()
+                }
+            )
+
         }
-
-        RoundButton(
-            text = "라운드 수정",
-            onClick = {
-                onAction(RoundAction.OnRoundButtonClick)
-                navController.popBackStack()
-            }
-        )
-
     }
 }
 
